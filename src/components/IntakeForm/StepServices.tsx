@@ -1,8 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-
 interface ServiceItem {
   name: string;
   description: string;
@@ -19,14 +16,6 @@ interface StepServicesProps {
 }
 
 export default function StepServices({ data, onChange }: StepServicesProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    gsap.from(ref.current.children, {
-      y: 20, opacity: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out', clearProps: 'all',
-    });
-  }, []);
 
   const services = data.services || [{ name: '', description: '', price: '' }];
 
@@ -47,7 +36,7 @@ export default function StepServices({ data, onChange }: StepServicesProps) {
   };
 
   return (
-    <div ref={ref} className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Products & Services</h2>
       <p className="text-muted text-sm">List the key offerings to feature on the site.</p>
 

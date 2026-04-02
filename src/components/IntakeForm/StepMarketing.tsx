@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
 
 const SOCIAL_PLATFORMS = [
   { id: 'instagram', label: 'Instagram' },
@@ -32,14 +30,6 @@ interface StepMarketingProps {
 }
 
 export default function StepMarketing({ data, onChange }: StepMarketingProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    gsap.from(ref.current.children, {
-      y: 20, opacity: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out', clearProps: 'all',
-    });
-  }, []);
 
   const socialAccounts = data.socialAccounts || {};
 
@@ -56,7 +46,7 @@ export default function StepMarketing({ data, onChange }: StepMarketingProps) {
   };
 
   return (
-    <div ref={ref} className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Marketing & Social Media</h2>
       <p className="text-muted text-sm">Tell us about your current digital presence and marketing goals.</p>
 

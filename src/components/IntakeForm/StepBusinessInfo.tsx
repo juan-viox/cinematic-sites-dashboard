@@ -1,8 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-
 const BUSINESS_TYPES = [
   'restaurant',
   'retail',
@@ -20,17 +17,8 @@ interface StepBusinessInfoProps {
 }
 
 export default function StepBusinessInfo({ data, onChange }: StepBusinessInfoProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    gsap.from(ref.current.children, {
-      y: 20, opacity: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out', clearProps: 'all',
-    });
-  }, []);
-
   return (
-    <div ref={ref} className="space-y-5">
+    <div className="space-y-5 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Business Information</h2>
       <p className="text-muted text-sm">Tell us about the business we&apos;re building for.</p>
 

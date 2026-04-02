@@ -64,6 +64,15 @@ body {
   box-shadow: 0 0 0 1px var(--border), 0 0 20px var(--glow);
 }
 
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out both;
+}
+
 /* Animated gradient text */
 .gradient-text {
   background: linear-gradient(135deg, var(--accent-light), var(--accent), #fd79a8);

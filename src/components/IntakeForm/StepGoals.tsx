@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
+import { useState } from 'react';
 
 const GOAL_OPTIONS = [
   'Lead Generation',
@@ -34,15 +33,7 @@ interface StepGoalsProps {
 }
 
 export default function StepGoals({ data, onChange }: StepGoalsProps) {
-  const ref = useRef<HTMLDivElement>(null);
   const [newCompetitor, setNewCompetitor] = useState('');
-
-  useEffect(() => {
-    if (!ref.current) return;
-    gsap.from(ref.current.children, {
-      y: 20, opacity: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out', clearProps: 'all',
-    });
-  }, []);
 
   const toggleGoal = (goal: string) => {
     const current = data.goals || [];
@@ -70,7 +61,7 @@ export default function StepGoals({ data, onChange }: StepGoalsProps) {
   };
 
   return (
-    <div ref={ref} className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Goals & Competition</h2>
       <p className="text-muted text-sm">What should the site achieve? Who are the competitors?</p>
 

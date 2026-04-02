@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
 
 interface StepReviewProps {
   formData: {
@@ -52,15 +50,6 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 export default function StepReview({ formData, onEditStep }: StepReviewProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    gsap.from(ref.current.children, {
-      y: 20, opacity: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out', clearProps: 'all',
-    });
-  }, []);
-
   const b = formData.business;
   const br = formData.brand;
   const s = formData.services;
@@ -68,7 +57,7 @@ export default function StepReview({ formData, onEditStep }: StepReviewProps) {
   const m = formData.marketing;
 
   return (
-    <div ref={ref} className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Review & Submit</h2>
       <p className="text-muted text-sm">Review the intake data before starting the analysis pipeline.</p>
 

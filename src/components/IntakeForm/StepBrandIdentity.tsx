@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
+import { useState } from 'react';
 
 const STYLE_MOODS = ['Modern', 'Classic', 'Bold', 'Minimal', 'Luxury', 'Playful'];
 const COLOR_OPTIONS = [
@@ -23,15 +22,7 @@ interface StepBrandIdentityProps {
 }
 
 export default function StepBrandIdentity({ data, onChange }: StepBrandIdentityProps) {
-  const ref = useRef<HTMLDivElement>(null);
   const [newUrl, setNewUrl] = useState('');
-
-  useEffect(() => {
-    if (!ref.current) return;
-    gsap.from(ref.current.children, {
-      y: 20, opacity: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out', clearProps: 'all',
-    });
-  }, []);
 
   const toggleMood = (mood: string) => {
     const current = data.styleMood || [];
@@ -57,7 +48,7 @@ export default function StepBrandIdentity({ data, onChange }: StepBrandIdentityP
   };
 
   return (
-    <div ref={ref} className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Brand Identity</h2>
       <p className="text-muted text-sm">Help us understand the visual direction.</p>
 
