@@ -50,9 +50,5 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
 
-  return NextResponse.json({
-    client: project.client,
-    competitive: project.competitive,
-    goals: project.goals,
-  });
+  return NextResponse.json(project);
 }
