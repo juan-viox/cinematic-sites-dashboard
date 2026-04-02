@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import gsap from 'gsap';
 import FormProgress from '@/components/IntakeForm/FormProgress';
 import StepBusinessInfo from '@/components/IntakeForm/StepBusinessInfo';
 import StepBrandIdentity from '@/components/IntakeForm/StepBrandIdentity';
@@ -16,7 +15,6 @@ export default function IntakePage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const stepContainerRef = useRef<HTMLDivElement>(null);
 
   const [business, setBusiness] = useState<Record<string, string>>({});
   const [brand, setBrand] = useState<{ colorPreference: string; styleMood: string[]; referenceUrls: string[] }>({
@@ -56,32 +54,8 @@ export default function IntakePage() {
     contentPreferences: [],
   });
 
-  const animateTransition = useCallback((direction: 'next' | 'prev', callback: () => void) => {
-    if (!stepContainerRef.current) {
-      callback();
-      return;
-    }
-    const xOut = direction === 'next' ? -40 : 40;
-    const xIn = direction === 'next' ? 40 : -40;
-    gsap.to(stepContainerRef.current, {
-      x: xOut,
-      opacity: 0,
-      duration: 0.2,
-      ease: 'power2.in',
-      onComplete: () => {
-        callback();
-        gsap.fromTo(
-          stepContainerRef.current,
-          { x: xIn, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }
-        );
-      },
-    });
-  }, []);
-
   const goToStep = (step: number) => {
-    const dir = step > currentStep ? 'next' : 'prev';
-    animateTransition(dir, () => setCurrentStep(step));
+    setCurrentStep(step);
   };
 
   const next = () => {
@@ -146,7 +120,7 @@ export default function IntakePage() {
     <div className="max-w-3xl mx-auto px-6 py-10">
       <FormProgress currentStep={currentStep} onStepClick={goToStep} />
 
-      <div ref={stepContainerRef} className="min-h-[500px]">
+      <div className="min-h-[500px]">
         {currentStep === 0 && <StepBusinessInfo data={business} onChange={updateBusiness} />}
         {currentStep === 1 && <StepBrandIdentity data={brand} onChange={updateBrand} />}
         {currentStep === 2 && <StepServices data={services} onChange={updateServices} />}
