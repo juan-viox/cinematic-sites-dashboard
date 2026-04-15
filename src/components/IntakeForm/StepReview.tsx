@@ -4,10 +4,29 @@
 interface StepReviewProps {
   formData: {
     business: Record<string, string>;
-    brand: { colorPreference: string; styleMood: string[]; referenceUrls: string[] };
+    brand: { colorPreference: string; styleMood: string[]; referenceUrls: string[]; logoUrl?: string; brandColors?: string; typography?: string };
     services: { services: { name: string; description: string; price: string }[]; specialties: string; targetAudience: string };
     goals: { goals: string[]; knownCompetitors: string[]; differentiator: string; budgetRange: string };
-    marketing: { socialAccounts: Record<string, string>; currentEfforts: string; blotatoInterest: boolean; contentPreferences: string[] };
+    technical: {
+      customDomain: string;
+      githubUsername: string;
+      seoKeywords: string[];
+      schemaType: string;
+      voicePersona: string;
+      voiceLanguages: string[];
+      voicePhoneNumber: string;
+      enableVoiceAgent: boolean;
+      enableGithubDeploy: boolean;
+    };
+    marketing: {
+      socialAccounts: Record<string, string>;
+      currentEfforts: string;
+      blotatoInterest: boolean;
+      contentPreferences: string[];
+      newsletterProvider?: string;
+      newsletterEmail?: string;
+      enableNewsletter?: boolean;
+    };
   };
   onEditStep: (step: number) => void;
 }
@@ -39,7 +58,7 @@ function Section({
   );
 }
 
-function Field({ label, value }: { label: string; value: string }) {
+function Field({ label, value }: { label: string; value: string | undefined }) {
   if (!value) return null;
   return (
     <div className="mb-2">
@@ -54,26 +73,35 @@ export default function StepReview({ formData, onEditStep }: StepReviewProps) {
   const br = formData.brand;
   const s = formData.services;
   const g = formData.goals;
+  const t = formData.technical;
   const m = formData.marketing;
 
   return (
     <div className="space-y-4 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Review & Submit</h2>
-      <p className="text-muted text-sm">Review the intake data before starting the analysis pipeline.</p>
+      <p className="text-muted text-sm">Review the intake data before starting the 11-phase pipeline.</p>
 
       <Section title="Business Info" step={0} onEdit={onEditStep}>
         <Field label="Name" value={b.name} />
         <Field label="Type" value={b.businessType} />
+        <Field label="Tagline" value={b.tagline} />
+        <Field label="Founder" value={b.founder} />
         <Field label="URL" value={b.sourceUrl} />
+        <Field label="Instagram" value={b.instagramUrl} />
         <Field label="Phone" value={b.phone} />
         <Field label="Email" value={b.email} />
         <Field label="Address" value={b.address} />
+        <Field label="Location" value={b.location} />
+        <Field label="Region" value={b.region} />
         <Field label="Description" value={b.description} />
         <Field label="Years" value={b.yearsInBusiness} />
         <Field label="Team Size" value={b.teamSize} />
       </Section>
 
       <Section title="Brand Identity" step={1} onEdit={onEditStep}>
+        <Field label="Logo URL" value={br.logoUrl} />
+        <Field label="Brand Colors" value={br.brandColors} />
+        <Field label="Typography" value={br.typography} />
         <Field label="Color Direction" value={br.colorPreference} />
         <Field label="Style Mood" value={(br.styleMood || []).join(', ')} />
         {(br.referenceUrls || []).length > 0 && (
@@ -116,12 +144,34 @@ export default function StepReview({ formData, onEditStep }: StepReviewProps) {
         )}
       </Section>
 
-      <Section title="Marketing & Social" step={4} onEdit={onEditStep}>
+      <Section title="Technical Setup" step={4} onEdit={onEditStep}>
+        <Field label="Custom Domain" value={t.customDomain} />
+        <Field label="GitHub Username" value={t.githubUsername} />
+        <Field label="GitHub Auto-Deploy" value={t.enableGithubDeploy ? 'Yes' : 'No'} />
+        <Field label="Schema Type" value={t.schemaType} />
+        {(t.seoKeywords || []).length > 0 && (
+          <div className="mb-2">
+            <span className="text-xs text-muted">SEO Keywords: </span>
+            <div className="flex flex-wrap gap-1 mt-1">
+              {t.seoKeywords.map((kw, i) => (
+                <span key={i} className="px-2 py-0.5 rounded-full bg-bg border border-border text-xs text-text">{kw}</span>
+              ))}
+            </div>
+          </div>
+        )}
+        <Field label="Voice Agent" value={t.enableVoiceAgent ? 'Enabled' : 'Disabled'} />
+        <Field label="Voice Persona" value={t.voicePersona} />
+        <Field label="Voice Languages" value={(t.voiceLanguages || []).join(', ')} />
+        <Field label="Phone Area Code" value={t.voicePhoneNumber} />
+      </Section>
+
+      <Section title="Marketing & Social" step={5} onEdit={onEditStep}>
         {Object.entries(m.socialAccounts || {}).filter(([, v]) => v).map(([platform, handle]) => (
           <Field key={platform} label={platform} value={handle} />
         ))}
         <Field label="Current Efforts" value={m.currentEfforts} />
         <Field label="Content Preferences" value={(m.contentPreferences || []).join(', ')} />
+        <Field label="Newsletter" value={m.enableNewsletter ? `Yes (${m.newsletterProvider || 'mailto'})` : 'No'} />
         <Field label="Blotato Managed Social" value={m.blotatoInterest ? 'Yes - Interested' : 'No'} />
       </Section>
     </div>

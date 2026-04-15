@@ -50,7 +50,7 @@ export default function StepBusinessInfo({ data, onChange }: StepBusinessInfoPro
           </select>
         </div>
 
-        <div className="md:col-span-2">
+        <div>
           <label className="block text-sm font-medium text-muted mb-1">Current Website URL</label>
           <input
             type="url"
@@ -58,6 +58,39 @@ export default function StepBusinessInfo({ data, onChange }: StepBusinessInfoPro
             onChange={(e) => onChange('sourceUrl', e.target.value)}
             className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
             placeholder="https://example.com"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-muted mb-1">Instagram URL</label>
+          <input
+            type="url"
+            value={data.instagramUrl || ''}
+            onChange={(e) => onChange('instagramUrl', e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+            placeholder="https://instagram.com/acmerestaurant"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-muted mb-1">Founder / Owner Name</label>
+          <input
+            type="text"
+            value={data.founder || ''}
+            onChange={(e) => onChange('founder', e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+            placeholder="Jane Smith"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-muted mb-1">Tagline</label>
+          <input
+            type="text"
+            value={data.tagline || ''}
+            onChange={(e) => onChange('tagline', e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+            placeholder="Authentic Italian since 1985"
           />
         </div>
 
@@ -91,6 +124,28 @@ export default function StepBusinessInfo({ data, onChange }: StepBusinessInfoPro
             onChange={(e) => onChange('address', e.target.value)}
             className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
             placeholder="123 Main St, New York, NY 10001"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-muted mb-1">Location / City</label>
+          <input
+            type="text"
+            value={data.location || ''}
+            onChange={(e) => onChange('location', e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+            placeholder="New York, NY"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-muted mb-1">Region / Service Area</label>
+          <input
+            type="text"
+            value={data.region || ''}
+            onChange={(e) => onChange('region', e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+            placeholder="Manhattan, Brooklyn, Queens"
           />
         </div>
 

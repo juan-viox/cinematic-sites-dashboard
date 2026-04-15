@@ -7,8 +7,11 @@ import StepBusinessInfo from '@/components/IntakeForm/StepBusinessInfo';
 import StepBrandIdentity from '@/components/IntakeForm/StepBrandIdentity';
 import StepServices from '@/components/IntakeForm/StepServices';
 import StepGoals from '@/components/IntakeForm/StepGoals';
+import StepTechnical from '@/components/IntakeForm/StepTechnical';
 import StepMarketing from '@/components/IntakeForm/StepMarketing';
 import StepReview from '@/components/IntakeForm/StepReview';
+
+const LAST_STEP = 6; // 7 steps total (0-indexed)
 
 export default function IntakePage() {
   const router = useRouter();
@@ -17,10 +20,20 @@ export default function IntakePage() {
   const [error, setError] = useState<string | null>(null);
 
   const [business, setBusiness] = useState<Record<string, string>>({});
-  const [brand, setBrand] = useState<{ colorPreference: string; styleMood: string[]; referenceUrls: string[] }>({
+  const [brand, setBrand] = useState<{
+    colorPreference: string;
+    styleMood: string[];
+    referenceUrls: string[];
+    logoUrl?: string;
+    brandColors?: string;
+    typography?: string;
+  }>({
     colorPreference: '',
     styleMood: [],
     referenceUrls: [],
+    logoUrl: '',
+    brandColors: '',
+    typography: '',
   });
   const [services, setServices] = useState<{
     services: { name: string; description: string; price: string }[];
@@ -42,16 +55,43 @@ export default function IntakePage() {
     differentiator: '',
     budgetRange: '',
   });
+  const [technical, setTechnical] = useState<{
+    customDomain: string;
+    githubUsername: string;
+    seoKeywords: string[];
+    schemaType: string;
+    voicePersona: string;
+    voiceLanguages: string[];
+    voicePhoneNumber: string;
+    enableVoiceAgent: boolean;
+    enableGithubDeploy: boolean;
+  }>({
+    customDomain: '',
+    githubUsername: '',
+    seoKeywords: [],
+    schemaType: '',
+    voicePersona: '',
+    voiceLanguages: ['English'],
+    voicePhoneNumber: '',
+    enableVoiceAgent: true,
+    enableGithubDeploy: true,
+  });
   const [marketing, setMarketing] = useState<{
     socialAccounts: Record<string, string>;
     currentEfforts: string;
     blotatoInterest: boolean;
     contentPreferences: string[];
+    newsletterProvider?: string;
+    newsletterEmail?: string;
+    enableNewsletter?: boolean;
   }>({
     socialAccounts: {},
     currentEfforts: '',
     blotatoInterest: false,
     contentPreferences: [],
+    newsletterProvider: '',
+    newsletterEmail: '',
+    enableNewsletter: true,
   });
 
   const goToStep = (step: number) => {
@@ -59,7 +99,7 @@ export default function IntakePage() {
   };
 
   const next = () => {
-    if (currentStep < 5) goToStep(currentStep + 1);
+    if (currentStep < LAST_STEP) goToStep(currentStep + 1);
   };
 
   const prev = () => {
@@ -78,7 +118,7 @@ export default function IntakePage() {
       const res = await fetch('/api/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ business, brand, services, goals, marketing }),
+        body: JSON.stringify({ business, brand, services, goals, technical, marketing }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -112,6 +152,10 @@ export default function IntakePage() {
     setGoals((prev) => ({ ...prev, [field]: value }));
   };
 
+  const updateTechnical = (field: string, value: string | string[] | boolean) => {
+    setTechnical((prev) => ({ ...prev, [field]: value }));
+  };
+
   const updateMarketing = (field: string, value: unknown) => {
     setMarketing((prev) => ({ ...prev, [field]: value as Record<string, string> | string | boolean | string[] }));
   };
@@ -125,10 +169,11 @@ export default function IntakePage() {
         {currentStep === 1 && <StepBrandIdentity data={brand} onChange={updateBrand} />}
         {currentStep === 2 && <StepServices data={services} onChange={updateServices} />}
         {currentStep === 3 && <StepGoals data={goals} onChange={updateGoals} />}
-        {currentStep === 4 && <StepMarketing data={marketing} onChange={updateMarketing} />}
-        {currentStep === 5 && (
+        {currentStep === 4 && <StepTechnical data={technical} onChange={updateTechnical} />}
+        {currentStep === 5 && <StepMarketing data={marketing} onChange={updateMarketing} />}
+        {currentStep === 6 && (
           <StepReview
-            formData={{ business, brand, services, goals, marketing }}
+            formData={{ business, brand, services, goals, technical, marketing }}
             onEditStep={goToStep}
           />
         )}
@@ -151,7 +196,7 @@ export default function IntakePage() {
           Back
         </button>
 
-        {currentStep < 5 ? (
+        {currentStep < LAST_STEP ? (
           <button
             onClick={next}
             className="px-8 py-3 rounded-lg text-sm font-medium bg-accent text-white hover:bg-accent/80 transition-colors"

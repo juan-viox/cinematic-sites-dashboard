@@ -17,6 +17,9 @@ interface StepBrandIdentityProps {
     colorPreference: string;
     styleMood: string[];
     referenceUrls: string[];
+    logoUrl?: string;
+    brandColors?: string;
+    typography?: string;
   };
   onChange: (field: string, value: string | string[]) => void;
 }
@@ -50,7 +53,46 @@ export default function StepBrandIdentity({ data, onChange }: StepBrandIdentityP
   return (
     <div className="space-y-6 animate-fade-in">
       <h2 className="text-2xl font-bold gradient-text">Brand Identity</h2>
-      <p className="text-muted text-sm">Help us understand the visual direction.</p>
+      <p className="text-muted text-sm">Help us understand the visual direction. We&apos;ll recreate your existing logo as an inline SVG.</p>
+
+      {/* Logo URL */}
+      <div>
+        <label className="block text-sm font-medium text-muted mb-1">Existing Logo URL</label>
+        <input
+          type="url"
+          value={data.logoUrl || ''}
+          onChange={(e) => onChange('logoUrl', e.target.value)}
+          className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+          placeholder="https://example.com/logo.png (we'll recreate as SVG)"
+        />
+        <p className="text-xs text-muted mt-1">If you have a logo, paste the URL here. We&apos;ll recreate it as an inline SVG with currentColor support.</p>
+      </div>
+
+      {/* Brand Colors (optional override) */}
+      <div>
+        <label className="block text-sm font-medium text-muted mb-1">Brand Colors (optional)</label>
+        <input
+          type="text"
+          value={data.brandColors || ''}
+          onChange={(e) => onChange('brandColors', e.target.value)}
+          className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+          placeholder="#1A1A2E, #E94560, #0F3460 — or leave blank for AI"
+        />
+        <p className="text-xs text-muted mt-1">Comma-separated hex codes. Skip to let AI extract from your site.</p>
+      </div>
+
+      {/* Typography preference */}
+      <div>
+        <label className="block text-sm font-medium text-muted mb-1">Typography Preference (optional)</label>
+        <input
+          type="text"
+          value={data.typography || ''}
+          onChange={(e) => onChange('typography', e.target.value)}
+          className="w-full px-4 py-3 rounded-lg bg-surface-2 border border-border text-text focus:border-accent focus:outline-none transition-colors"
+          placeholder="Playfair Display + Inter — or leave blank for AI pairing"
+        />
+        <p className="text-xs text-muted mt-1">Google Fonts names. Skip to let AI pair display + body fonts.</p>
+      </div>
 
       {/* Color Preference */}
       <div>

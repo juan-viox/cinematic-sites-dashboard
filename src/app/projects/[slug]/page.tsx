@@ -15,14 +15,18 @@ interface ProjectData {
 }
 
 const PIPELINE_PHASES = [
-  { id: 'intake', label: 'Client Intake', icon: '1' },
-  { id: 'analysis', label: 'Market Analysis', icon: '2' },
-  { id: 'brand', label: 'Brand Identity', icon: '3' },
-  { id: 'hero', label: 'Hero Concepts', icon: '4' },
-  { id: 'scenes', label: 'Scene Generation', icon: '5' },
-  { id: 'build', label: 'Site Build', icon: '6' },
-  { id: 'deploy', label: 'Deploy', icon: '7' },
-  { id: 'voice', label: 'Voice Agent', icon: '8' },
+  { id: 'intake', label: 'Intake', icon: '0' },
+  { id: 'analysis', label: 'Competitive Analysis', icon: '1' },
+  { id: 'brand', label: 'Brand Analysis', icon: '2' },
+  { id: 'hero', label: 'Hero Concepts', icon: '3' },
+  { id: 'scenes', label: 'Scene Generation', icon: '4' },
+  { id: 'build', label: 'Site Build', icon: '5' },
+  { id: 'images', label: 'Image Generation', icon: '6' },
+  { id: 'seo', label: 'SEO & Meta', icon: '7' },
+  { id: 'deploy', label: 'Deploy & GitHub', icon: '8' },
+  { id: 'voice', label: 'Voice Agent', icon: '9' },
+  { id: 'newsletter', label: 'Newsletter', icon: '10' },
+  { id: 'qa', label: 'Final QA', icon: '11' },
 ];
 
 export default function ProjectDashboard() {

@@ -25,6 +25,9 @@ interface StepMarketingProps {
     currentEfforts: string;
     blotatoInterest: boolean;
     contentPreferences: string[];
+    newsletterProvider?: string;
+    newsletterEmail?: string;
+    enableNewsletter?: boolean;
   };
   onChange: (field: string, value: Record<string, string> | string | boolean | string[]) => void;
 }
@@ -98,6 +101,50 @@ export default function StepMarketing({ data, onChange }: StepMarketingProps) {
               {type}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Newsletter */}
+      <div className="p-5 rounded-xl bg-surface-2 border border-border space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-accent uppercase tracking-wider">Newsletter Signup</h3>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={data.enableNewsletter !== false}
+              onChange={(e) => onChange('enableNewsletter', e.target.checked)}
+              className="w-4 h-4 accent-accent"
+            />
+            <span className="text-xs text-text">Include on site</span>
+          </label>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label className="block text-xs font-medium text-muted mb-1">Provider</label>
+            <select
+              value={data.newsletterProvider || ''}
+              onChange={(e) => onChange('newsletterProvider', e.target.value)}
+              className="w-full px-3 py-2 rounded-lg bg-bg border border-border text-text focus:border-accent focus:outline-none text-sm"
+            >
+              <option value="">Mailto (simple)</option>
+              <option value="mailchimp">Mailchimp</option>
+              <option value="convertkit">ConvertKit</option>
+              <option value="substack">Substack</option>
+              <option value="beehiiv">Beehiiv</option>
+              <option value="klaviyo">Klaviyo</option>
+              <option value="custom">Custom API</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-muted mb-1">Signup endpoint / list ID</label>
+            <input
+              type="text"
+              value={data.newsletterEmail || ''}
+              onChange={(e) => onChange('newsletterEmail', e.target.value)}
+              className="w-full px-3 py-2 rounded-lg bg-bg border border-border text-text focus:border-accent focus:outline-none text-sm"
+              placeholder="Form action URL or API key"
+            />
+          </div>
         </div>
       </div>
 

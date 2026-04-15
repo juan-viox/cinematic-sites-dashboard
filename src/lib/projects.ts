@@ -12,9 +12,14 @@ export interface ClientInfo {
   name: string;
   sourceUrl: string;
   businessType: string;
+  instagramUrl?: string;
+  tagline?: string;
+  founder?: string;
   phone?: string;
   email?: string;
   address?: string;
+  location?: string;
+  region?: string;
   description?: string;
   yearsInBusiness?: string;
   teamSize?: string;
@@ -25,6 +30,21 @@ export interface BrandPreferences {
   styleMood: string[];
   referenceUrls: string[];
   logoPath?: string;
+  logoUrl?: string;
+  brandColors?: string;
+  typography?: string;
+}
+
+export interface TechnicalSetup {
+  customDomain: string;
+  githubUsername: string;
+  seoKeywords: string[];
+  schemaType: string;
+  voicePersona: string;
+  voiceLanguages: string[];
+  voicePhoneNumber: string;
+  enableVoiceAgent: boolean;
+  enableGithubDeploy: boolean;
 }
 
 export interface ServiceItem {
@@ -45,6 +65,9 @@ export interface MarketingInfo {
   currentEfforts: string;
   blotatoInterest: boolean;
   contentPreferences: string[];
+  newsletterProvider?: string;
+  newsletterEmail?: string;
+  enableNewsletter?: boolean;
 }
 
 export interface CompetitorEntry {
@@ -66,7 +89,9 @@ export interface ProjectData {
   client: ClientInfo;
   brandPreferences: BrandPreferences;
   services: ServiceItem[];
+  servicesMeta?: { specialties: string; targetAudience: string };
   goals: GoalsInfo;
+  technical?: TechnicalSetup;
   marketing: MarketingInfo;
   status: { phase: string; completedPhases: string[] };
   competitive: {

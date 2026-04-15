@@ -8,6 +8,7 @@ const STEPS = [
   'Brand Identity',
   'Services',
   'Goals',
+  'Technical',
   'Marketing',
   'Review',
 ];
